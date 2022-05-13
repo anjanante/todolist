@@ -10,10 +10,14 @@ class App extends React.Component{
         return (
             <section id="todo">
                 <BrowserRouter>
+                    {/* <Switch> */}
                     <Routes>
                         {/* <Route path='/add-task' component={AddTask} /> */}
                         <Route path='/add-task' element={<AddTask />} />
-                        <Route path='/' element={<ToDoList />} />
+                        {/* <Route path='/:filter?' element={<ToDoList />} /> */}
+                        <Route path='/' element={<ToDoList />} >
+                            <Route path=':filter' element={<ToDoList />} />
+                        </Route>
                     </Routes>
                     <NavBar />
                 </BrowserRouter>

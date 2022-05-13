@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 //for version 18 >
 // import {StrictMode} from 'react';
 // import {createRoot} from 'react-dom/client';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './components/App';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './css/todo.css';
 
 ReactDOM.render(
     <App />,
