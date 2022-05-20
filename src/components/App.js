@@ -1,11 +1,10 @@
-import React from 'react';
+import React , { useId }from 'react';
 import ToDoList from './ToDoList';
 import NavBar from './NavBar';
 import AddTask from './AddTask';
 // import {BrowserRouter, Switch, Route} from 'react-router-dom'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import initialData from '../initialData';
-import uniqueId from 'uniqueid';
 
 class App extends React.Component{
     state = {
@@ -25,7 +24,7 @@ class App extends React.Component{
     /*On Add new element*/
     onAddTask = (newTaskName) => {
         let newTask = {
-            id: uniqueId(),
+            id: new Date().getTime(),
             name:newTaskName,
             completed:false
         }
@@ -35,7 +34,33 @@ class App extends React.Component{
         }))
     }
 
+    /*On Delete complete*/
+    onDeleteCompleted = () => {
+        console.log('onDeleteCompleted')
+        this.setState(prevState => ({
+            tasks: prevState.tasks.filter(task => !task.completed)
+        }))
+    }
+
+    shouldComponentUpdate = () => {
+        console.log('shouldComponentUpdate')
+        return true
+    }
+
+    componentDidMount = () => {
+        console.log('componentDidMount')
+    }
+
+    componentDidUpdate = () => {
+        console.log('componentDidUpdate')
+    }
+
+    getSnapshotBeforeUpdate = () => {
+        console.log('getSnapshotBeforeUpdate')
+    }
+
     render(){
+        console.log('render')
         return (
             <section id="todo">
                 <BrowserRouter>
@@ -48,7 +73,7 @@ class App extends React.Component{
                             <Route path=':filter' element={<ToDoList />} />
                         </Route>
                     </Routes>
-                    <NavBar />
+                    <NavBar onDeleteCompleted={this.onDeleteCompleted}/>
                 </BrowserRouter>
             </section>
         )
