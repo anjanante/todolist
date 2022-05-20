@@ -3,7 +3,7 @@ import ToDoList from './ToDoList';
 import NavBar from './NavBar';
 import AddTask from './AddTask';
 // import {BrowserRouter, Switch, Route} from 'react-router-dom'
-import {BrowserRouter, Routes, Route } from 'react-router-dom'
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import initialData from '../initialData';
 
 class App extends React.Component{
@@ -11,16 +11,16 @@ class App extends React.Component{
         tasks:initialData
     }
 
-    onToogleCompleted = (taskId) => {
-        let newTask = this.state.tasks.find(task => (task.id === taskId))
-        newTask.completed = !newTask.completed
+    onToggleCompleted = (taskId) => {
+        let taskToUpdate = this.state.tasks.find(task => task.id === taskId)
+        taskToUpdate.completed = !taskToUpdate.completed
 
-        this.setState(prevState => {
+        this.setState(prevState => (
             prevState.tasks.map(task => {
-                return (task.id === taskId) ? newTask : task
+                return task.id === taskId ? taskToUpdate : task
             })
-        })
-    }
+        ))
+    } 
 
     render(){
         return (
@@ -31,7 +31,7 @@ class App extends React.Component{
                         {/* <Route path='/add-task' component={AddTask} /> */}
                         <Route path='/add-task' element={<AddTask />} />
                         {/* <Route path='/:filter?' element={<ToDoList />} /> */}
-                        <Route path='/' element={<ToDoList tasks={this.state.tasks} />} >
+                        <Route path='/' element={<ToDoList tasks={this.state.tasks} onToggleCompleted={this.onToggleCompleted} />} >
                             <Route path=':filter' element={<ToDoList />} />
                         </Route>
                     </Routes>

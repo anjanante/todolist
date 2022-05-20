@@ -1,29 +1,22 @@
 import React from 'react';
 import ToDo from './ToDo';
-import { useParams } from "react-router-dom";
+import { useParams } from 'react-router-dom'
 
-// const ToDoList = ({tasks, match}) => {
-const ToDoList = ({tasks}) => {
-    let filteredTasks;
-    let params = useParams();
-    // switch (match.params.filter) {
-    switch (params.filter) {
-        case 'completed':
-            filteredTasks = tasks.filter(task => task.completed)
-            break;
-    
-        default:
-            filteredTasks = tasks
-            break;
+const ToDoList = ({tasks,onToggleCompleted}) => {
+    let newTask = tasks
+    let params = useParams()
+    if(params.filter == 'completed')
+    {
+        newTask = tasks.filter(task => task.completed)
     }
 
-    if(filteredTasks.length === 0)
+    if(newTask.length === 0)
     {
-        return (
+        return  (
             <>
                 <h1 className="m-3">Liste des tâches</h1>
                 <ul className="list-group m-3">
-                    <li className="list-group-item">Aucune tâche à afficher</li>
+                    <li className="list-group-item d-flex align-tiems-center">Aucune tache</li>
                 </ul>
             </>
         )
@@ -33,9 +26,8 @@ const ToDoList = ({tasks}) => {
                 <h1 className="m-3">Liste des tâches</h1>
                 <ul className="list-group m-3">
                     {
-                        filteredTasks.map((task) => <ToDo task={task} key={task.id} />)
+                        newTask.map(task => <ToDo task={task} key={task.id} onToggleCompleted={onToggleCompleted} />)
                     }
-                    
                 </ul>
             </>
         )
