@@ -1,14 +1,16 @@
-import React , { useId }from 'react';
+import React from 'react';
 import ToDoList from './ToDoList';
 import NavBar from './NavBar';
 import AddTask from './AddTask';
 // import {BrowserRouter, Switch, Route} from 'react-router-dom'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import initialData from '../initialData';
+import Fetching from './Fetching';
 
 class App extends React.Component{
     state = {
-        tasks:initialData
+        tasks:[],
+        fetching:true
     }
     /*On check element*/
     onToggleCompleted = (taskId) => {
@@ -49,6 +51,13 @@ class App extends React.Component{
 
     componentDidMount = () => {
         console.log('componentDidMount')
+        let delay = Math.floor(Math.random() * 5000)
+        setTimeout(() => {
+            this.setState({
+                fetching:false,
+                tasks:initialData
+            })
+        }, delay)
     }
 
     componentDidUpdate = () => {
@@ -63,6 +72,7 @@ class App extends React.Component{
         console.log('render')
         return (
             <section id="todo">
+                {this.state.fetching ? <Fetching /> : null}
                 <BrowserRouter>
                     {/* <Switch> */}
                     <Routes>
